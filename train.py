@@ -1,3 +1,5 @@
+import os 
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 from dcgan.model import Model
 from tqdm import tqdm
 from PIL import Image
@@ -22,12 +24,10 @@ if __name__ == "__main__":
             print("something went wrong")
 
     dataset = np.array(dataset)
-
-    print(dataset.shape)
     dataset = tf.data.Dataset.from_tensor_slices(dataset)
     dataset = dataset.batch(32)
     model = Model()
-#    model.train(dataset, epochs=1)
+    model.train(dataset, epochs=10)
     model.save("./weights")
     model.load_weights("./weights")
     model.generate_images(save_dir="./data")
