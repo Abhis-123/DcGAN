@@ -12,7 +12,7 @@ if __name__ == "__main__":
     train_path = TRAIN_IMAGE_DIR
     files = os.listdir(train_path)
     dataset = []
-    for file in tqdm(files):
+    for file in files:
         try:
             # print(file)
             img = Image.open(train_path + '/' + file)
@@ -22,12 +22,14 @@ if __name__ == "__main__":
             dataset.append(img)
         except:
             print("something went wrong")
-
+    print(f"loded all images ...")
     dataset = np.array(dataset)
     dataset = tf.data.Dataset.from_tensor_slices(dataset)
     dataset = dataset.batch(32)
     model = Model()
-    model.train(dataset, epochs=10)
+    loss=model.train(dataset, epochs=10)
+    print(f"loss : {loss}")
     model.save("./weights")
     model.load_weights("./weights")
     model.generate_images(save_dir="./data")
+    

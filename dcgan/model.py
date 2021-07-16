@@ -50,7 +50,11 @@ class Model:
         print(self.discriminator.summary())
 
     def train(self, dataset, epochs=2):
+        d_loss=[]
+        g_loss=[]
         for epoch in range(epochs):
+            gen_loss = []
+            disc_loss = []
             for idx, (real) in enumerate(tqdm(dataset)):
                 batch_size = real.shape[0]
                 random_latent_vector = tf.random.normal(shape=(batch_size, self.latent_dimension))
@@ -59,6 +63,7 @@ class Model:
                     d_loss_real = self.loss(tf.ones((batch_size, 1)), self.discriminator(real))
                     d_loss_fake = self.loss(tf.zeros((batch_size, 1)), self.discriminator(fake))
                     loss = d_loss_real + d_loss_fake
+                    disc_loss.append(loss.numpy())
 
                 grads = disc_tape.gradient(loss, self.discriminator.trainable_weights)
                 var = self.discriminator_optimiser
@@ -70,8 +75,20 @@ class Model:
                     fake = self.generator(random_latent_vector)
                     output = self.discriminator(fake)
                     loss_gen = self.loss(tf.ones((batch_size, 1)), output)
+                    gen_loss.append(loss_gen.numpy())
                 grads_gen = gen_tape.gradient(loss_gen, self.generator.trainable_weights)
                 self.generator_optimiser.apply_gradients(zip(grads_gen, self.generator.trainable_weights))
+            epoch_gen_loss=sum(gen_loss)
+            epoch_disc_loss=sum(disc_loss)
+            d_loss.append(epoch_disc_loss)
+            g_loss.append(epoch_gen_loss)
+            print(f"Epoch {epoch} generator loss {epoch_gen_loss} discriminator loss {epoch_disc_loss}")
+        
+        loss={
+            "discriminator_loss":d_loss,
+            "generator_loss":g_loss,
+        }
+        return loss
 
     def save(self, path):
         if not os.path.exists(path + "/model"):
