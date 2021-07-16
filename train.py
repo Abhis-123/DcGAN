@@ -22,14 +22,16 @@ if __name__ == "__main__":
             dataset.append(img)
         except:
             print("something went wrong")
-    print(f"loded all images ...")
+    print(f"loaded all images ...")
     dataset = np.array(dataset)
     dataset = tf.data.Dataset.from_tensor_slices(dataset)
     dataset = dataset.batch(32)
     model = Model()
-    loss=model.train(dataset, epochs=10)
-    print(f"loss : {loss}")
-    model.save("./weights")
-    model.load_weights("./weights")
-    model.generate_images(save_dir="./data")
+    #loss=model.train(dataset, epochs=1)
+    image = model.generate_image()
+    # print(f"loss : {loss}")
+    #model.save("./weights",folder_name="model2")
+    model.load_weights("./weights/model2")
+    # model.generate_images(save_dir="./data")
+
     

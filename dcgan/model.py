@@ -90,17 +90,21 @@ class Model:
         }
         return loss
 
-    def save(self, path):
-        if not os.path.exists(path + "/model"):
-            os.mkdir(path + "/model")
-        self.generator.save(path + "/model/generator.h5")
-        self.discriminator.save(path + "/model/discriminator.h5")
+    def save(self, path, folder_name="model"):
+        if not os.path.exists(path + "/"+str(folder_name)):
+            os.mkdir(path + "/"+str(folder_name))
+        self.generator.save(f"{path}/{folder_name}/generator.h5")
+        self.discriminator.save(f"{path}/{folder_name}/discriminator.h5")
 
     def load_weights(self, path):
-        self.generator.load_weights(path + "/model/generator.h5")
-        self.discriminator.load_weights(path + "/model/discriminator.h5")
+        if not os.path.exists(path):
+            print("weights folder not found..")
+            return False
+        self.generator.load_weights(f"{path}/generator.h5")
+        self.discriminator.load_weights(f"{path}/discriminator.h5")
+        return True
 
-    def generate_images(self, count=1, save_dir=".."):
+    def generate_images(self, count=1, save_dir="."):
         if not os.path.exists(save_dir+"/generated"):
             os.mkdir(save_dir + '/generated')
         save_dir = save_dir + "/generated"
@@ -111,6 +115,11 @@ class Model:
             img = tf.keras.preprocessing.image.array_to_img(fake[0])
             name = f"generated_image_{i}.png"
             img.save(save_dir + "/" + name)
+
+    def generate_image(self):
+        random_latent_vector = tf.random.normal(shape=(1, self.latent_dimension))
+        fake = self.generator(random_latent_vector)
+        return fake[0]*255
 
 
 if __name__ == "__main__":
