@@ -9,12 +9,16 @@ weights folder contains the saved weights for the generator and discriminator
 
 # Model
 model class contains the code for DCGAN Model 
+
 functions : 
+    
     summary(): This function prints the the layer wise information about generator and discriminator
+    
     train(): This function train the generator and discriminator 
         parameters : 
             dataset : a tensor of shape (None,None, 64,64,3)  which means dataset should be supplied in forms of batches
             epochs  : number of epochs to train the generator and discriminator
+    
     save: to save the weights of the generator and discriminator after training the model
         parameters: 
             path : base path to save the folder of weights of the generator and discriminator
