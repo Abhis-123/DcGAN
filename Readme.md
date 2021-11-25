@@ -1,13 +1,12 @@
 # DCGAN 
 This is my [Tensorflow](https://www.tensorflow.org/) implementation of **Deep Convolutional Generative Adversarial Networks in Tensorflow** proposed in the paper [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434). The main contribution comes from the tricks which stablize the training of Generative Adversarial Networks. The proposed architecture is as followed.
-<img src="figure/dcgan.png" height="300"/>
+<img src="pictures\dcgan.png" height="300"/>
 
 This project is an implementation of famous DCGAN algorithm. I have created a package named dc gan which contains the actual implementation of the algorithm.  
 # Prerequisites
 
-- Python 2.7 or Python 3.3+
-- [Tensorflow 1.0.0](https://github.com/tensorflow/tensorflow/tree/r1.0)
-- [SciPy](http://www.scipy.org/install.html)
+- Python 3.3+
+- [Tensorflow 2.3.1](https://github.com/tensorflow/tensorflow/tree/r1.0)
 - [NumPy](http://www.numpy.org/)
 
 # Project Structure 
@@ -47,4 +46,40 @@ functions :
         return :
             a 3D images tensor
 
+
+# Results During Training
+## MNIST
+
+* Generated samples (200th epochs)
+
+<img src="pictures\results\mnist/samples.png" height="250"/>
+
+* First 50 epochs
+
+<img src="pictures\results\mnist/training.gif" height="250"/>
+
+## CFAR
+
+* Generated samples (500th epochs)
+
+<img src="pictures\results\cfar10/samples.png" height="250"/>
+
+* First 40 epochs
+
+<img src="pictures\results\cfar10/training.gif" height="250"/>
+
+## Training tricks
+
+* To avoid the fast convergence of the discriminator network
+    * The generator network is updated more frequently.
+    * Higher learning rate is applied to the training of the generator.
+* One-sided label smoothing is applied to the positive labels.
+* Gradient clipping trick is applied to stablize training
+
+
+## Related works
+* [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434) by Radford
+* [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist)
+
+* Training Tips i borrowed from [shaohua0116 training](https://github.com/shaohua0116/DCGAN-Tensorflow/)
 
