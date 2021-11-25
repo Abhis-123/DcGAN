@@ -1,13 +1,23 @@
 # DCGAN 
-This project is an implementation of famous DCGAN algorithm. I have created a package named dc gan which contains the actual implementation of the algorithm.  
+This is my [Tensorflow](https://www.tensorflow.org/) implementation of **Deep Convolutional Generative Adversarial Networks in Tensorflow** proposed in the paper [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434). The main contribution comes from the tricks which stablize the training of Generative Adversarial Networks. The proposed architecture is as followed.
+<img src="figure/dcgan.png" height="300"/>
 
+This project is an implementation of famous DCGAN algorithm. I have created a package named dc gan which contains the actual implementation of the algorithm.  
+# Prerequisites
+
+- Python 2.7 or Python 3.3+
+- [Tensorflow 1.0.0](https://github.com/tensorflow/tensorflow/tree/r1.0)
+- [SciPy](http://www.scipy.org/install.html)
+- [NumPy](http://www.numpy.org/)
+
+# Project Structure 
 ## Data 
-This folder contains the data for training the generator and discriminator.If you want to train the generator and discriminator on your dataset there is only one step to do this just replace the images in data/train folder with your images in data
+'data' folder contains the data for training the generator and discriminator.If you want to train the generator and discriminator on your dataset there is only one step to do this just replace the images in data/train folder with your images in data
 
 ## weights 
 weights folder contains the saved weights for the generator and discriminator
 
-# Model
+## Model
 model class contains the code for DCGAN Model 
 
 functions : 
